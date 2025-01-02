@@ -1,2 +1,4 @@
-package TicTacToe.strategies.gamewinningstrategy;public interface GameWinningStrategy {
+package TicTacToe.strategies.gamewinningstrategy;
+
+public interface GameWinningStrategy {
 }

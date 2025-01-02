@@ -1,4 +1,4 @@
-package TicTacToe.factory;
+package TicTacToe.factories;
 
 public class PlayerFactory {
 }

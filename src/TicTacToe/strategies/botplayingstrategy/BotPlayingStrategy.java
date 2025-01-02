@@ -1,2 +1,4 @@
-package TicTacToe.strategies.botplayingstrategy;public interface BotPlayingStrategy {
+package TicTacToe.strategies.botplayingstrategy;
+
+public interface BotPlayingStrategy {
 }

@@ -1,2 +1,6 @@
-package TicTacToe.models;public class CellState {
+package TicTacToe.models;
+
+public enum CellState {
+    EMPTY,
+    FILLED,
 }
