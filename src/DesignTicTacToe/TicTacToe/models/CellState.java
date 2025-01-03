@@ -1,4 +1,4 @@
-package TicTacToe.models;
+package DesignTicTacToe.TicTacToe.models;
 
 public enum CellState {
     EMPTY,

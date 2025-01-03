@@ -1,8 +1,8 @@
-package controllers;
+package DesignTicTacToe.controllers;
 
-import TicTacToe.models.Game;
-import TicTacToe.models.GameStatus;
-import TicTacToe.models.Player;
+import DesignTicTacToe.TicTacToe.models.Game;
+import DesignTicTacToe.TicTacToe.models.GameStatus;
+import DesignTicTacToe.TicTacToe.models.Player;
 
 import java.util.List;
 

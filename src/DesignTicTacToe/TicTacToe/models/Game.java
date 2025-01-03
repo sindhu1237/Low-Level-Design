@@ -1,7 +1,8 @@
-package TicTacToe.models;
+package DesignTicTacToe.TicTacToe.models;
 
-import TicTacToe.strategies.gamewinningstrategy.GameWinningStrategy;
-import exceptions.InValidGameBuildException;
+import DesignTicTacToe.TicTacToe.strategies.gamewinningstrategy.GameWinningStrategy;
+import DesignTicTacToe.TicTacToe.strategies.gamewinningstrategy.OrderOneWinningStrategy;
+import DesignTicTacToe.exceptions.InValidGameBuildException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,36 @@ public class Game {
     }
 
     public void makeNextMove() {
+        // which player turn is this ?
+        Player playerToMove = players.get(nextPlayerIndex);
+        System.out.println("It is " + playerToMove.getName() + "'s turn.");
+
+        Move move = playerToMove.decideMove(this.board);
+
+        // Validate the move decided by the player
+        int row = move.getCell().getRow();
+        int col = move.getCell().getCol();
+
+        System.out.println("Player is playing a move at (" + row + ", " + col + ")" );
+
+        // Assumption : Move is Valid.
+        board.getBoard().get(row).get(col).setCellState(CellState.FILLED);
+        board.getBoard().get(row).get(col).setPlayer(playerToMove);
+
+        // Add the current move to the list of moves
+        this.moves.add(move);
+
+        // Check the winner.
+        if(gameWinningStrategy.checkWinner(board, playerToMove, move.getCell())) {
+            this.setGameStatus(GameStatus.ENDED);
+            winner = playerToMove;
+        }
+
+        // Check for the Draw
+
+        // Go to next player.
+        nextPlayerIndex += 1;
+        nextPlayerIndex %= players.size();
     }
 
     public static class Builder {
@@ -117,17 +148,19 @@ public class Game {
         }
         public Game build() throws InValidGameBuildException{
             // validation
-            try {
-                isValid();
-            }catch(InValidGameBuildException exception) {
-                throw new InValidGameBuildException("Something went wrong");
-            }
+            isValid();
+//            try {
+//                isValid();
+//            }catch(InValidGameBuildException exception) {
+//                throw new InValidGameBuildException("Something went wrong");
+//            }
             Game game = new Game();
             game.setBoard(new Board(dimension));
             game.setGameStatus(GameStatus.IN_PROGRESS);
             game.setPlayers(players);
             game.setMoves(new ArrayList<>());
             game.setNextPlayerToMove(0);
+            game.setGameWinningStrategy(new OrderOneWinningStrategy(dimension));
             return game;
         }
     }

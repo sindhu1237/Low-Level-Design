@@ -1,4 +1,4 @@
-package TicTacToe.models;
+package DesignTicTacToe.TicTacToe.models;
 
 public enum GameStatus {
     DRAW, // Nobody has won the game

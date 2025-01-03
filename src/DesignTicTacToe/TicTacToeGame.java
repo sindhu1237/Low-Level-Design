@@ -1,5 +1,8 @@
-import TicTacToe.models.*;
-import exceptions.InValidGameBuildException;
+package DesignTicTacToe;
+
+import DesignTicTacToe.TicTacToe.models.*;
+import DesignTicTacToe.controllers.GameController;
+import DesignTicTacToe.exceptions.InValidGameBuildException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +19,13 @@ public class TicTacToeGame {
         String isBot = sc.next();
         List<Player> players = new ArrayList<>();
         int numberOfHumanPlayers = dimension - 1;
-        if (isBot.equals('y')) {
+        if (isBot.equals("y")) {
             numberOfHumanPlayers -= 1;
             System.out.println("What is the name of bot : ");
             String name = sc.next();
             System.out.println("What is the symbol of the bot: ");
             String symbol = sc.next();
+//            String difficultyLevel = sc.next();
             players.add(new Bot(name, symbol.charAt(0), BotDifficultyLevel.EASY));
 
         }
@@ -38,5 +42,34 @@ public class TicTacToeGame {
                 .build();
 
         */
+        GameController gameController = new GameController();
+        Game game = gameController.createGame(dimension, players);
+
+        // Players will start playing the game
+        while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)) {
+            System.out.println("This is the current board : ");
+            gameController.displayBoard(game);
+            System.out.println("Do you want to undo ? y/n");
+            String input = sc.next();
+            if (input.equals("y")) {
+                gameController.undo(game);
+            } else {
+                gameController.executeNextMove(game);
+            }
+        }
+        // Someone has won the game or the game is draw.
+        System.out.println("Game has ENDED");
+        if (game.getGameStatus().equals(GameStatus.ENDED)) {
+            System.out.println("Winner is " + gameController.getWinner(game).getName());
+        }
     }
 }
+
+
+// UNDO Steps :-
+/*
+1. Remove the last move for the list of moves.
+2. Update the board as null
+3. Update the hashmaps
+4. Update the currentPlayer index as well
+ */
